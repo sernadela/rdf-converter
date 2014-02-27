@@ -31,7 +31,7 @@
 
                     <div class="inner cover">
                         <h1 class="cover-heading">Paste the code here. <a id="sample" class="lead">Try sample</a>.</h1>
-                        <p><textarea id="textarea" class="form-control" rows="5"></textarea></p>
+                        <p><textarea id="textarea" class="form-control" rows="10"></textarea></p>
                         <p>
                         <div class="row">
                             <div class="col-md-6">FROM
@@ -46,19 +46,21 @@
                             </div>
                         </div>
 
-
-
                         </p>
                         <p class="lead">
-                            <a href="#" class="btn btn-lg btn-default" id="convert">Convert!</a>
+                            <a href="#" class="btn btn-lg btn-default" id="convert" data-toggle="modal" data-target="#myModal">Convert!</a>
                         </p>
                     </div>
 
-                    <textarea id="output" class="form-control hide" rows="10" readonly></textarea>
-
-
                     <div class="mastfoot">
                         <div class="inner">
+                            <p><iframe src="http://ghbtns.com/github-btn.html?user=sernadela&type=follow&count=true"
+  allowtransparency="true" frameborder="0" scrolling="0" width="160" height="20"></iframe>
+                            <iframe src="http://ghbtns.com/github-btn.html?user=sernadela&repo=rdf-converter&type=watch&count=true"
+  allowtransparency="true" frameborder="0" scrolling="0" width="75" height="20"></iframe>
+                                <iframe src="http://ghbtns.com/github-btn.html?user=sernadela&repo=rdf-converter&type=fork&count=true"
+  allowtransparency="true" frameborder="0" scrolling="0" width="75" height="20"></iframe>
+                            </p>
                             <p>Development project of <a href="http://bioinformatics.ua.pt">bioinformatics.ua.pt</a>, by <a href="https://github.com/sernadela">@sernadela</a>.</p>
                         </div>
                     </div>
@@ -68,6 +70,25 @@
             </div>
 
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Result</h4>
+                    </div>
+                    <div class="modal-body">
+                        <textarea id="output" class="form-control hide" rows="30" readonly></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="js/bootstrap.js"></script>
