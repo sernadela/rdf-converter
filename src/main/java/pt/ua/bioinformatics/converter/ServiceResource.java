@@ -10,6 +10,7 @@ import com.hp.hpl.jena.sparql.core.DatasetGraphFactory;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.HashMap;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Path;
@@ -64,6 +65,41 @@ public class ServiceResource {
         try {
             RDFDataMgr.read(dg, stream, Lang.NQUADS);
 
+            RDFDataMgr.write(sw, dg, RDFFormat.TRIG);
+        } catch (Exception e) {
+            sw.write(e.getLocalizedMessage());
+        }
+
+        return sw.toString();
+    }
+
+    /**
+     * PUT method for converting an instance of ServiceResource
+     *
+     * @param url representation for the resource
+     * @return an HTTP response with content of the updated or created resource.
+     */
+    @Path("/url/")
+    @POST
+    //@Consumes("text/plain")
+    //@Produces(MediaType.TEXT_PLAIN)
+    public String convertURL(String url) {
+        System.out.println(url);
+        StringWriter sw = new StringWriter();
+        DatasetGraph dg = DatasetGraphFactory.createMem();
+        try {
+            RDFDataMgr.read(dg, url, Lang.NQUADS);
+            HashMap<String, String> prefixes = new HashMap<String, String>();
+            prefixes.put("coeus", "http://bioinformatics.ua.pt/coeus/resource/");
+            prefixes.put("dc", "http://purl.org/dc/elements/1.1/");
+            prefixes.put("np", "http://www.nanopub.org/nschema#");
+            prefixes.put("prov", "http://www.w3.org/ns/prov#");
+            prefixes.put("xsd", "http://www.w3.org/2001/XMLSchema#");
+            prefixes.put("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+            prefixes.put("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+            prefixes.put("dcterms", "http://purl.org/dc/terms/");
+            
+            dg.getDefaultGraph().getPrefixMapping().setNsPrefixes(prefixes);
             RDFDataMgr.write(sw, dg, RDFFormat.TRIG);
         } catch (Exception e) {
             sw.write(e.getLocalizedMessage());

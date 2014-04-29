@@ -55,11 +55,11 @@
                     <div class="mastfoot">
                         <div class="inner">
                             <p><iframe src="http://ghbtns.com/github-btn.html?user=sernadela&type=follow&count=true"
-  allowtransparency="true" frameborder="0" scrolling="0" width="160" height="20"></iframe>
-                            <iframe src="http://ghbtns.com/github-btn.html?user=sernadela&repo=rdf-converter&type=watch&count=true"
-  allowtransparency="true" frameborder="0" scrolling="0" width="75" height="20"></iframe>
+                                       allowtransparency="true" frameborder="0" scrolling="0" width="160" height="20"></iframe>
+                                <iframe src="http://ghbtns.com/github-btn.html?user=sernadela&repo=rdf-converter&type=watch&count=true"
+                                        allowtransparency="true" frameborder="0" scrolling="0" width="75" height="20"></iframe>
                                 <iframe src="http://ghbtns.com/github-btn.html?user=sernadela&repo=rdf-converter&type=fork&count=true"
-  allowtransparency="true" frameborder="0" scrolling="0" width="75" height="20"></iframe>
+                                        allowtransparency="true" frameborder="0" scrolling="0" width="75" height="20"></iframe>
                             </p>
                             <p>Development project of <a href="http://bioinformatics.ua.pt">bioinformatics.ua.pt</a>, by <a href="https://github.com/sernadela">@sernadela</a>.</p>
                         </div>
@@ -80,9 +80,10 @@
                         <h4 class="modal-title" id="myModalLabel">Result</h4>
                     </div>
                     <div class="modal-body">
-                        <textarea id="output" class="form-control hide" rows="30" readonly></textarea>
+                        <textarea id="output" class="form-control" rows="30" readonly></textarea>
                     </div>
                     <div class="modal-footer">
+                        <a id="download" type="button" class="btn btn-primary" >Download</a>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -96,8 +97,8 @@
 
             $("#convert").click(function() {
                 var content = $("#textarea").val();
-                $("#output").removeClass("hide");
                 $.post("./service/", content, postCallback);
+                //$.post("./service/url/","http://localhost:8080/coeus/nanopub/HGNC_BRAF_Nanopub", postTrigCallback);
             });
 
             $("#sample").click(function() {
@@ -108,10 +109,25 @@
 
             });
 
-            function postCallback(data, status) {
-                $("#output").html(data);
+            function postTrigCallback(data, status) {
+                //$("#output").html(data);
                 console.log(data);
                 console.log(status);
+
+                //window.location.href = url;
+                //document.write(r);
+            }
+
+            function postCallback(data, status) {
+                $("#output").html(data);
+                var contentType = 'application/trig';
+                //contentType = 'text/plain';
+                var blob = new Blob([data], {'type': contentType});
+                var url = window.URL.createObjectURL(blob);
+                var name = 'converter.trig';
+                var download = document.getElementById("download");
+                download.setAttribute("href", url);
+                download.setAttribute("download", name);
             }
 
             function example() {
@@ -127,7 +143,7 @@
                         + '<http://www.example.org/pubs#provenance> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.nanopub.org/nschema#Provenance> <http://www.example.org/pubs#provenance> .'
                         + '<http://www.example.org/pubs#nanopubEx> <http://www.w3.org/ns/prov#wasAttributedTo> <http://www.example.org/pubs#paul> <http://www.example.org/pubs#pubInfo> .'
                         + '<http://www.example.org/pubs#nanopubEx> <http://www.w3.org/ns/prov#generatedAtTime> "2012-10-26T12:45:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> <http://www.example.org/pubs#pubInfo> .'
-                        + '<http://www.example.org/pubs#pubInfo> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.nanopub.org/nschema#PublicationInfo> <http://www.example.org/pubs#pubInfo> .'
+                        + '<http://www.example.org/pubs#pubInfo> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.nanopub.org/nschema#PublicationInfo> <http://www.example.org/pubs#pubInfo> .';
             }
 
         </script>
